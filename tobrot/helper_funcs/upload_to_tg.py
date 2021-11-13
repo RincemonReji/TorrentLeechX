@@ -96,30 +96,8 @@ async def upload_to_tg(
             i_m_s_g = await message.reply_text(
                 "<b><i>📑Telegram doesn't Support Uploading this File.</i></b>\n"
                 f"<b><i>🎯Detected File Size: {d_f_s} </i></b>\n"
-                "\n<code>🗃 Trying to split the files . . .</code>"
+                "\n<code>🗃 Trying to return . . .</code>"
             )
-            splitted_dir = await split_large_files(local_file_name)
-            totlaa_sleif = os.listdir(splitted_dir)
-            totlaa_sleif.sort()
-            number_of_files = len(totlaa_sleif)
-            LOGGER.info(totlaa_sleif)
-            ba_se_file_name = os.path.basename(local_file_name)
-            await i_m_s_g.edit_text(
-                f"<b><i>📨 Detected File Size: {d_f_s}</i></b> \n"
-                f"📬<code>{ba_se_file_name}</code><i><b> splitted into {number_of_files} Files🗃.</b></i>\n"
-                "<i><b>📤Trying to upload to Telegram📤, Now...</b></i>"
-            )
-            for le_file in totlaa_sleif:
-                # recursion: will this FAIL somewhere?
-                await upload_to_tg(
-                    message,
-                    os.path.join(splitted_dir, le_file),
-                    from_user,
-                    dict_contatining_uploaded_files,
-                    client,
-                    edit_media,
-                    yt_thumb,
-                )
         else:
             sizze = os.path.getsize(local_file_name)
             sent_message = await upload_single_file(
